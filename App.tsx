@@ -13,19 +13,25 @@ interface PromptIdeaWithId extends PromptIdea {
 
 // Preset profession options to lower user effort
 const professionOptions: { label: string; value: string }[] = [
-  { label: 'Фронтенд‑разработчик', value: 'для фронтенд‑разработчика' },
-  { label: 'Бэкенд‑разработчик', value: 'для бэкенд‑разработчика' },
-  { label: 'Мобильный разработчик', value: 'для мобильного разработчика' },
-  { label: 'Дизайнер', value: 'для дизайнера' },
-  { label: 'Продакт‑менеджер', value: 'для продакт‑менеджера' },
-  { label: 'Маркетолог', value: 'для маркетолога' },
-  { label: 'Аналитик данных', value: 'для аналитика данных' },
-  { label: 'Data Scientist', value: 'для data scientist' },
-  { label: 'No‑code‑создатель', value: 'для no‑code‑создателя' },
-  { label: 'Учитель', value: 'для учителя' },
-  { label: 'DevOps', value: 'для DevOps‑инженера' },
-  { label: 'QA‑инженер', value: 'для QA‑инженера' },
+  { label: 'Предприниматель', value: 'для предпринимателя' },
   { label: 'Стартапер', value: 'для стартапера' },
+  { label: 'Маркетолог', value: 'для маркетолога' },
+  { label: 'Продакт‑менеджер', value: 'для продакт‑менеджера' },
+  { label: 'SMM‑специалист', value: 'для SMM‑специалиста' },
+  { label: 'Таргетолог', value: 'для таргетолога' },
+  { label: 'Копирайтер', value: 'для копирайтера' },
+  { label: 'SEO‑специалист', value: 'для SEO‑специалиста' },
+  { label: 'Создатель контента', value: 'для создателя контента' },
+  { label: 'Блогер', value: 'для блогера' },
+  { label: 'Специалист по продажам', value: 'для специалиста по продажам' },
+  { label: 'HR/Рекрутер', value: 'для HR‑специалиста' },
+  { label: 'Коуч/Тренер', value: 'для коуча или тренера' },
+  { label: 'Учитель', value: 'для учителя' },
+  { label: 'Дизайнер', value: 'для дизайнера' },
+  { label: 'No‑code‑создатель', value: 'для no‑code‑создателя' },
+  { label: 'Бизнес‑аналитик', value: 'для бизнес‑аналитика' },
+  { label: 'Проектный менеджер', value: 'для проектного менеджера' },
+  { label: 'Фрилансер', value: 'для фрилансера' },
 ];
 
 const App: React.FC = () => {
