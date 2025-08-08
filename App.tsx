@@ -11,6 +11,23 @@ interface PromptIdeaWithId extends PromptIdea {
   id: string;
 }
 
+// Preset profession options to lower user effort
+const professionOptions: { label: string; value: string }[] = [
+  { label: 'Фронтенд‑разработчик', value: 'для фронтенд‑разработчика' },
+  { label: 'Бэкенд‑разработчик', value: 'для бэкенд‑разработчика' },
+  { label: 'Мобильный разработчик', value: 'для мобильного разработчика' },
+  { label: 'Дизайнер', value: 'для дизайнера' },
+  { label: 'Продакт‑менеджер', value: 'для продакт‑менеджера' },
+  { label: 'Маркетолог', value: 'для маркетолога' },
+  { label: 'Аналитик данных', value: 'для аналитика данных' },
+  { label: 'Data Scientist', value: 'для data scientist' },
+  { label: 'No‑code‑создатель', value: 'для no‑code‑создателя' },
+  { label: 'Учитель', value: 'для учителя' },
+  { label: 'DevOps', value: 'для DevOps‑инженера' },
+  { label: 'QA‑инженер', value: 'для QA‑инженера' },
+  { label: 'Стартапер', value: 'для стартапера' },
+];
+
 const App: React.FC = () => {
   const [prompts, setPrompts] = useState<PromptIdeaWithId[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -18,12 +35,13 @@ const App: React.FC = () => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [topic, setTopic] = useState<string>('');
 
-  const handleGenerateIdeas = useCallback(async () => {
+  const handleGenerateIdeas = useCallback(async (overrideTopic?: string) => {
     setIsLoading(true);
     setError(null);
     setCopiedId(null); // Reset copied state on new generation
     try {
-      const ideas = await generateAppIdeas(topic);
+      const effectiveTopic = overrideTopic ?? topic;
+      const ideas = await generateAppIdeas(effectiveTopic);
       // Assign a unique ID to each new idea for stable keys
       const newIdeasWithIds: PromptIdeaWithId[] = ideas.map((idea) => ({
         ...idea,
@@ -60,6 +78,26 @@ const App: React.FC = () => {
             </div>
           )}
 
+          {/* Profession presets at the very start to reduce user effort */}
+          <div className="w-full max-w-4xl mx-auto mb-6">
+            <div className="mb-2 text-sm font-semibold text-gray-700">Кому нужны идеи?</div>
+            <div className="flex flex-wrap gap-2">
+              {professionOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => { setTopic(opt.value); handleGenerateIdeas(opt.value); }}
+                  disabled={isLoading}
+                  className={`px-3 py-1.5 text-xs md:text-sm rounded-md border transition-colors duration-200 focus:outline-none whitespace-nowrap ${
+                    isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'
+                  } bg-white text-gray-700 border-gray-200`}
+                  aria-label={`Сгенерировать идеи ${opt.value}`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="w-full max-w-lg mx-auto mb-6">
             <input
               type="text"
@@ -74,7 +112,7 @@ const App: React.FC = () => {
 
           <div className="flex justify-center mb-10">
             <button
-              onClick={handleGenerateIdeas}
+              onClick={() => handleGenerateIdeas()}
               disabled={isLoading}
               className="inline-flex items-center justify-center px-6 py-3 text-base font-bold text-white transition-colors duration-200 bg-gray-900 rounded-md focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700"
             >
